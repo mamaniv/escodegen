@@ -657,6 +657,9 @@
                 return result;
             }
         }
+        if (comment.type === 'HashbangComment') {
+            return '#!' + comment.value;
+        }
         if (extra.format.indent.adjustMultilineComment && /[\n\r]/.test(comment.value)) {
             return adjustMultilineComment('/*' + comment.value + '*/', specialBase);
         }
@@ -2378,6 +2381,9 @@
 
             if (typeof expr.value === 'number') {
                 return generateNumber(expr.value);
+            }
+            if (typeof expr.value === 'bigint') {
+                return expr.value + 'n';
             }
 
             if (typeof expr.value === 'boolean') {
